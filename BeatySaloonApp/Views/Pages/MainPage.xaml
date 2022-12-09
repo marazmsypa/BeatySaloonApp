@@ -10,10 +10,10 @@
 
     <Grid>
         <ListView x:Name="CategoriesListView"
-                  VerticalAlignment="Center" >
+                  VerticalAlignment="Center" SelectionChanged="CategoriesListView_SelectionChanged">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
+                <DataTemplate >
+                    <Grid x:Name="GridCell">
                         <Image Source="{Binding CategoryImage}" Style="{StaticResource LabelImage}">
 
                         </Image>

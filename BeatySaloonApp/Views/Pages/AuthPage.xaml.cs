@@ -30,16 +30,23 @@ namespace BeatySaloonApp.Views.Pages
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            if (users.GetUser(LoginTextBox.Text, PasswordPasswordBox.Password) == null)
+            if (LoginTextBox.Text == "" || PasswordPasswordBox.Password == "")
             {
-                MessageBox.Show("Такого пользователя нет!");
+                MessageBox.Show("Вы не ввели логин или пароль!");
             }
             else
             {
-                Users activeUser = users.GetUser(LoginTextBox.Text, PasswordPasswordBox.Password);
-                Properties.Settings.Default.activeUser = activeUser.UserLogin;
-                Properties.Settings.Default.Save();
-                this.NavigationService.Navigate(new MainPage());
+                if (users.GetUser(LoginTextBox.Text, PasswordPasswordBox.Password).UserLogin == null)
+                {
+                    MessageBox.Show("Такого пользователя нет!");
+                }
+                else
+                {
+                    Users activeUser = users.GetUser(LoginTextBox.Text, PasswordPasswordBox.Password);
+                    Properties.Settings.Default.activeUser = activeUser.UserLogin;
+                    Properties.Settings.Default.Save();
+                    this.NavigationService.Navigate(new MainPage());
+                }
             }
             
         }

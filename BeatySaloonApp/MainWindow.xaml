@@ -19,6 +19,9 @@
             
         </Label>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Администрирование" Style="{StaticResource ElementButton}" x:Name="AdminButton" Click="AdminButton_Click">
+
+            </Button>
             <Button Content="Войти" Style="{StaticResource ElementButton}" x:Name="AuthButton" Click="AuthButton_Click">
 
             </Button>

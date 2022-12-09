@@ -13,5 +13,6 @@ namespace BeatySaloonApp
     /// </summary>
     public partial class App : Application
     {
+      
     }
 }

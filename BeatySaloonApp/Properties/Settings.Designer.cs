@@ -34,5 +34,17 @@ namespace BeatySaloonApp.Properties {
                 this["activeUser"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int selectedCategory {
+            get {
+                return ((int)(this["selectedCategory"]));
+            }
+            set {
+                this["selectedCategory"] = value;
+            }
+        }
     }
 }

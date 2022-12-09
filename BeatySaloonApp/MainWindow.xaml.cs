@@ -1,4 +1,5 @@
-﻿using BeatySaloonApp.Views.Pages;
+﻿using BeatySaloonApp.Controllers;
+using BeatySaloonApp.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace BeatySaloonApp
             InitializeComponent();
             MainFrame.Navigate(new MainPage());
         }
-
+        UsersController userControllerObj = new UsersController();
         private void MainFrame_Navigated(object sender, NavigationEventArgs e)
         {
             var curentPage = e.Content;
@@ -46,11 +47,20 @@ namespace BeatySaloonApp
             {
                 AuthButton.Visibility = Visibility.Visible;
             }
-            if (curentPage is MainPage && Properties.Settings.Default.activeUser != String.Empty)
+            if (curentPage is MainPage && Properties.Settings.Default.activeUser != String.Empty || curentPage is AuthPage)
             {
                 AuthButton.Visibility = Visibility.Collapsed;
                 BackButton.Visibility = Visibility.Collapsed;
             }
+            if (curentPage is ServicePage && Properties.Settings.Default.activeUser != String.Empty)
+            {
+                AuthButton.Visibility = Visibility.Collapsed;                
+            }
+            if (curentPage is AdminPage)
+            {
+                AuthButton.Visibility = Visibility.Collapsed;
+            }
+
             if (Properties.Settings.Default.activeUser != String.Empty)
             {
                 ExitButton.Visibility = Visibility.Visible;
@@ -58,6 +68,19 @@ namespace BeatySaloonApp
             if (Properties.Settings.Default.activeUser == String.Empty)
             {
                 ExitButton.Visibility = Visibility.Collapsed;
+            }
+
+            if (Properties.Settings.Default.activeUser != String.Empty && userControllerObj.CheckUser(Properties.Settings.Default.activeUser).IdRole == 1)
+            {
+                AdminButton.Visibility = Visibility.Visible;
+            }
+            if (Properties.Settings.Default.activeUser == String.Empty)
+            {
+                AdminButton.Visibility = Visibility.Collapsed;
+            }
+            if (curentPage is AdminPage)
+            {
+                AdminButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -84,6 +107,11 @@ namespace BeatySaloonApp
             Properties.Settings.Default.activeUser = String.Empty;
             Properties.Settings.Default.Save();
             MainFrame.Navigate(new AuthPage());
+        }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AdminPage());
         }
     }
 }

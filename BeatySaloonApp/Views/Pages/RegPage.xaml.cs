@@ -22,38 +22,131 @@ namespace BeatySaloonApp.Views.Pages
     /// </summary>
     public partial class RegPage : Page
     {
+        string generatedText = "";
         public RegPage()
         {
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string lower = "zyxwvutsrqponmlkjihgfedcba";
+            string digit = "1234567890";
             InitializeComponent();
+            generatedText = "";
+            Random rnd = new Random();
+            for (int i = 0; i < rnd.Next(5, 10); i++)
+            {
+                char capchaChar = 'a';
+                switch (rnd.Next(1, 4))
+                {
+                    case 1:
+                        capchaChar = upper[rnd.Next(0, 26)];
+                        break;
+                    case 2:
+                        capchaChar = lower[rnd.Next(0, 26)];
+                        break;
+                    case 3:
+                        capchaChar = digit[rnd.Next(0, 10)];
+                        break;
+                }
+                generatedText += capchaChar.ToString();
+                TextBlock capchaSymbol = new TextBlock()
+                {
+                    Text = capchaChar.ToString(),
+                    LayoutTransform = new RotateTransform(rnd.Next(-90, 91)),
+                    FontSize = rnd.Next(18, 35),
+                    Margin = new Thickness(rnd.Next(-5, -1)) 
+                };
+                capchaStack.Children.Add(capchaSymbol);
+            }
+            
         }
 
         private void RegButton_Click(object sender, RoutedEventArgs e)
         {
-           
-            if (ReturnPasswordTextBox.Text == PasswordTextBox.Text)
+            UsersController obj = new UsersController();
+            if (PasswordTextBox.Text != "" && LoginTextBox.Text != "")
             {
-                Users user = new Users() { 
-                    IdRole = 2,
-                    UserName = NameTextBox.Text,
-                    UserLastName = SurnameTextBox.Text,
-                    UserOtherName = PatronymicTextBox.Text,
-                    UserLogin = LoginTextBox.Text,
-                    UserPassword = PasswordTextBox.Text
-                };
-                UsersController obj = new UsersController();
-                
-                if (obj.AddUser(user))
+                if (ReturnPasswordTextBox.Text == PasswordTextBox.Text)
                 {
-                    MessageBox.Show("Вы успешно зарегистрировались!");
-                    this.NavigationService.Navigate(new AuthPage());
+                    if (generatedText == SymbolsTextBox.Text)
+                    {
+                        if (obj.CheckUser(LoginTextBox.Text).UserLogin == null)
+                        {
+                            Users user = new Users()
+                            {
+                                IdRole = 2,
+                                UserName = NameTextBox.Text,
+                                UserLastName = SurnameTextBox.Text,
+                                UserOtherName = PatronymicTextBox.Text,
+                                UserLogin = LoginTextBox.Text,
+                                UserPassword = PasswordTextBox.Text
+                            };
+
+
+                            if (obj.AddUser(user))
+                            {
+                                MessageBox.Show("Вы успешно зарегистрировались!");
+                                this.NavigationService.Navigate(new AuthPage());
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Пользователь с данным логином уже существует!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы неправильно ввели капчу!");
+                    }
+
                 }
-               
+                else
+                {
+                    MessageBox.Show("Пароли не совпадают!");
+                }
             }
             else
             {
-                MessageBox.Show("Пароли не совпадают!");
+                MessageBox.Show("Вы не ввелилогин или пароль!");
             }
-
         }
+
+        private void newCaptcha_Click(object sender, RoutedEventArgs e)
+        {
+            var list = capchaStack.Children.OfType<TextBlock>().ToList();
+            foreach (UIElement cb in list)
+                capchaStack.Children.Remove(cb);
+            string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string lower = "zyxwvutsrqponmlkjihgfedcba";
+            string digit = "1234567890";
+            InitializeComponent();
+            generatedText = "";
+            Random rnd = new Random();
+            for (int i = 0; i < rnd.Next(5, 10); i++)
+            {
+                char capchaChar = 'a';
+                switch (rnd.Next(1, 4))
+                {
+                    case 1:
+                        capchaChar = upper[rnd.Next(0, 26)];
+                        break;
+                    case 2:
+                        capchaChar = lower[rnd.Next(0, 26)];
+                        break;
+                    case 3:
+                        capchaChar = digit[rnd.Next(0, 10)];
+                        break;
+                }
+                generatedText += capchaChar.ToString();
+                TextBlock capchaSymbol = new TextBlock()
+                {
+                    Text = capchaChar.ToString(),
+                    LayoutTransform = new RotateTransform(rnd.Next(-45, 46)),
+                    FontSize = rnd.Next(18, 35),
+                    Margin = new Thickness(rnd.Next(-5,-1))
+                };
+                capchaStack.Children.Add(capchaSymbol);
+            }
+        }
+
+        
     }
 }

@@ -1,0 +1,65 @@
+﻿<Page x:Class="BeatySaloonApp.Views.Pages.ServicePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BeatySaloonApp.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ServicePage" x:Name="servicePage">
+
+    <Grid>
+       
+        <ListView x:Name="ServicesListView"
+                  VerticalAlignment="Center" Background="Lightpink" Height="300" SelectionChanged="ServicesListView_SelectionChanged">
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding title}" FontSize="30">
+
+                            </TextBlock>
+                            <StackPanel Margin="50 5 5 5">
+                                <TextBlock Text="{Binding cost}" Foreground="White" FontSize="20">
+
+                                </TextBlock>
+                                <TextBlock Text="{Binding durationInSeconds}" TextDecorations="Strikethrough">
+
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                       
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+        <StackPanel HorizontalAlignment="Right"  Background="#db4b6c" Width="200" x:Name="recordingData" Margin="3000 0 0 0">
+            <TextBlock HorizontalAlignment="Center" FontSize="20">
+                Запись
+            </TextBlock>
+            <Calendar HorizontalAlignment="Center" x:Name="calendarPicker" SelectedDatesChanged="calendarPicker_SelectedDatesChanged">
+                
+            </Calendar>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                <TextBlock>
+                    Дата
+                </TextBlock>
+                <TextBox Width="120" Margin="20 0 20 0" x:Name="dateTextBox">
+                    
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 0 20">
+                <TextBlock>
+                    Время
+                </TextBlock>
+                <TextBox Width="120" Margin="20 0 20 0" x:Name="TimeTextBox">
+                    21:20
+                </TextBox>
+            </StackPanel>
+            <Button Content="Записать" HorizontalAlignment="Center" Width="120" Padding="3" FontSize="15" Background="Bisque" x:Name="RecordButton" Click="RecordButton_Click"/>
+            <Button Content="Закрыть" HorizontalAlignment="Center" Width="120" Padding="3" FontSize="15" Background="Bisque" x:Name="CloseButton" Click="CloseButton_Click"/>
+
+        </StackPanel>
+    </Grid>
+</Page>
